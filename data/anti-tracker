@@ -1,0 +1,73 @@
+# MIUI
+full:a0.app.xiaomi.com
+full:api.installer.xiaomi.com
+full:api.jr.mi.com
+full:auth.be.sec.miui.com
+full:ccc.sys.miui.com
+full:cn.app.chat.xiaomi.net
+full:data.mistat.xiaomi.com
+full:diagnosis.ad.xiaomi.com
+full:etl-xlmc-ssl.sandai.net
+full:flash.sec.miui.com
+full:idm.api.io.mi.com
+full:ixav-cse.avlyun.com
+full:jupiter.sys.miui.com
+full:log.ad.xiaomi.com
+full:log.avlyun.sec.intl.miui.com
+full:logupdate.avlyun.sec.miui.com
+full:m.track.ad.xiaomi.com
+full:mazu.sec.miui.com
+full:metok.sys.miui.com
+full:miav-cse.avlyun.com
+full:miui-fxcse.avlyun.com
+full:qsb.browser.miui.srv
+full:rom.pt.miui.srv
+full:sdkconf.avlyun.com
+full:sdkconfig.ad.xiaomi.com
+full:ssl-cdn.static.browser.mi-img.com
+full:tmfsdk.m.qq.com
+full:tracking.miui.com
+full:update.avlyun.sec.miui.com
+# 哔哩哔哩
+full:broadcast.chat.bilibili.com
+full:dataflow.biliapi.com
+# 移动
+full:config.cmpassport.com
+full:www.cmpassport.com
+full:wap.cmpassport.com
+full:onekey1.cmpassport.com
+full:log1.cmpassport.com
+full:smsks1.cmpassport.com
+full:verify.cmpassport.com
+# 联通
+full:opencloud.wostore.cn
+full:auth.wosms.cn
+full:id.mail.wo.cn
+full:mdn.open.wo.cn
+full:hmrz.wo.cn
+full:nishub1.10010.com
+full:nissc1.10010.com
+full:enrichgw.10010.com
+# 电信
+full:id6.me
+full:open.e.189.cn
+# 第三方
+full:114dev.com
+full:onepass.geetest.com
+# Fake Location
+full:fakelocation.api.lerist.dev
+full:api.fakeloc.cc
+# 讯飞输入法
+full:imeffkdword.openspeech.cn
+full:planconfig.openspeech.cn
+full:hdns.openspeech.cn
+full:log.voicecloud.cn
+full:inputd.xfinfr.com
+full:abtest.openspeech.cn
+full:ime-res-download.xfinfr.com
+full:newuser.openspeech.cn
+full:ossp.voicecloud.cn
+full:topic.openspeech.cn
+full:coop.voicecloud.cn
+regexp:inputl[0-9]\.xfinfr\.com
+regexp:l[0-9]\.xfinfr\.com
