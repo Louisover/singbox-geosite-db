@@ -1,0 +1,14 @@
+# Microsoft
+domain:bing.com
+domain:live.com
+domain:microsoft.com
+all:.bing.com
+all:.microsoft.com
+all:microsoftonline.com
+# Google
+all:.google.com
+all:.googleadapis.com
+all:.googleapis.com
+all:.xn--ngstr-lra8j.com
+full:googleapis-cn.com
+full:googleapps-cn.com

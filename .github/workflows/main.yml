@@ -1,0 +1,92 @@
+name: Build singbox rules db files
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 22 * * *"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Checkout Loyalsoldier/domain-list-custom
+        uses: actions/checkout@v3
+        with:
+          repository: Loyalsoldier/domain-list-custom
+          path: custom
+
+      - name: Checkout v2fly/domain-list-community
+        uses: actions/checkout@v3
+        with:
+          repository: v2fly/domain-list-community
+          path: community
+
+      - name: Setup Go
+        uses: actions/setup-go@v4
+        with:
+          go-version-file: ./custom/go.mod
+          cache-dependency-path: ./custom/go.sum
+      
+      - name: Run make_rules.py
+        run: |
+          python3 -m pip install httpx > /dev/null
+          python3 make_rules.py
+          cp direct-list.txt ./community/data/cn
+          mv ./geosite-custom/* ./community/data/
+
+      - name: Build geosite.dat file
+        run: |
+          cd custom || exit 1
+          go run ./ --datapath=../community/data
+
+      - name: Checkout CHIZI-0618/sing-geosite
+        uses: actions/checkout@v3
+        with:
+          repository: CHIZI-0618/sing-geosite
+          path: sing-geosite
+
+      - name: Build geosite.db file
+        env:
+          NO_SKIP: true
+        run: |
+          cd sing-geosite || exit 1
+          cp ../custom/publish/geosite.dat ./
+          go run -v . geosite.dat geosite.db
+
+      - name: Move and zip files and generate sha256 hash
+        run: |
+          mkdir -p ./publish/
+          cp -r ./community/data ./publish/
+          install -Dp ./sing-geosite/geosite.db ./publish/
+          install -p direct-list.txt ./publish/
+          cd ./publish || exit 1
+          sha256sum geosite.db > geosite.db.sha256sum
+
+      - name: Git push assets to "release" branch
+        run: |
+          cd publish || exit 1
+          git init
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b release
+          git add .
+          git commit -m "latest"
+          git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
+          git push -f -u origin release
+
+      - name: Delete current release assets
+        uses: andreaswilli/delete-release-assets-action@v2.0.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          tag: latest
+          deleteOnlyFromDrafts: false
+
+      - name: Release and upload assets
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          release_name: latest
+          tag: latest
+          file_glob: true
+          file: ./publish/*
